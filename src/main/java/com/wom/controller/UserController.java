@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Random;
 
 @Controller("user")
-@RequestMapping("/user")
+@RequestMapping("/api")
 @CrossOrigin(allowCredentials = "true",allowedHeaders = "*")//跨域请求
 public class UserController extends BaseController {
 
@@ -28,8 +28,9 @@ public class UserController extends BaseController {
     private  HttpServletRequest httpServletRequest;
 
     //用户登陆接口
-    @RequestMapping(value = "/login",method ={RequestMethod.POST},consumes = {CONTENT_TYPE_FORMED})
+    @RequestMapping(value = "/user/login",method ={RequestMethod.POST},consumes = {CONTENT_TYPE_FORMED})
     @ResponseBody
+
     public CommonReturnType login(@RequestParam(name="telphone")String telphone,
                                   @RequestParam(name="password")Integer password) throws BusinessException {
         //入参校验
