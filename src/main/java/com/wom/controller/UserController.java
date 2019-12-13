@@ -7,6 +7,7 @@ import com.wom.error.EmBusinessError;
 import com.wom.response.CommonReturnType;
 import com.wom.service.UserService;
 import com.wom.service.model.UserModel;
+import com.wom.validator.ValidationResult;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,8 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Random;
 
 @Controller("user")
-@RequestMapping("/api")
-@CrossOrigin(allowCredentials = "true",allowedHeaders = "*")//跨域请求
+@RequestMapping("/problem")
+@CrossOrigin(origins = {"*"},allowCredentials = "true")//跨域请求
 public class UserController extends BaseController {
 
     @Autowired
@@ -33,10 +34,10 @@ public class UserController extends BaseController {
 
     public CommonReturnType login(@RequestParam(name="telphone")String telphone,
                                   @RequestParam(name="password")Integer password) throws BusinessException {
-        //入参校验
-        if (org.apache.commons.lang3.StringUtils.isEmpty(telphone)||
-        StringUtils.isEmpty(String.valueOf(password))){
-            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
+        //校验入参
+        ValidationResult result= new ValidationResult();
+        if (result.isHasErrors()){
+            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR,result.getErrMsg());
         }
 
         //用户登陆服务,用来校验用户登陆是否合法
@@ -115,10 +116,11 @@ public class UserController extends BaseController {
         //调用service服务获取对应Id的用户对象并返回给前端
 
         UserModel userModel = userService.getUserById(id);
+        ValidationResult result= new ValidationResult();
 
         //若获取的对应用户信息不存在
         if (userModel == null) {
-            throw new BusinessException(EmBusinessError.USER_NOT_EXIST);
+            throw new BusinessException(EmBusinessError.USER_NOT_EXIST, result.getErrMsg());
         }
 
         //将核心领域模型与用户对象转化为可供UI使用的viewobject

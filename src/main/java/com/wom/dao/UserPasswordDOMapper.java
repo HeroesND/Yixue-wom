@@ -1,7 +1,9 @@
 package com.wom.dao;
 
 import com.wom.dataobject.UserPasswordDO;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface UserPasswordDOMapper {
 
     int deleteByPrimaryKey(Integer id);

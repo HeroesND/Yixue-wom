@@ -8,7 +8,7 @@
     <!--数据库连接地址账号密码-->
     <context id="DB2Tables" targetRuntime="MyBatis3">
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://10.173.11.29:3306/miaosha"
+                        connectionURL="jdbc:mysql://localhost:3306/wo_worklist"
                         userId="root"
                         password="admin">
         </jdbcConnection>
@@ -38,5 +38,10 @@
                enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false"
                selectByExampleQueryId="false"></table>
+        <table tableName="wo_problem" domainObjectName="ProblemDO" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false"></table>
+
     </context>
 </generatorConfiguration>

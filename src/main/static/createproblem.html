@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="login">
+<div class="content__page">
+    <h3 class="s-wrap">创建工单</h3>
+    <div class="format-gallery">
+        <label class="control-label">反馈人</label>
+        <div>
+            <input  class="format-gallery" type="text" placeholder="反馈人" name="feedBack" id="feedBack">
+        </div>
+    </div>
+    <div class="format-gallery">
+        <label class="control-label">处理人</label>
+        <div>
+            <input  class="format-gallery" type="text" placeholder="处理人" name="disposeBy" id="disposeBy">
+        </div>
+    </div>
+    <div class="format-gallery">
+        <label class="control-label">反馈人所属部门</label>
+        <div>
+            <input  class="format-gallery" type="text" placeholder="反馈人所属部门" name="departmentby" id="departmentby">
+        </div>
+    </div>
+    <div class="format-gallery">
+        <label class="control-label">学生姓名</label>
+        <div>
+            <input  class="format-gallery" type="text" placeholder="学生姓名" name="studentName" id="studentName">
+        </div>
+    </div>
+    <div class="format-gallery">
+        <label class="control-label">学生手机号</label>
+        <div>
+            <input  class="format-gallery" type="text" placeholder="学生手机号" name="studentPhone" id="studentPhone">
+        </div>
+    </div>
+    <div class="format-gallery">
+        <label class="control-label">教师姓名</label>
+        <div>
+            <input  class="format-gallery" type="text" placeholder="教师姓名" name="teacherName" id="teacherName">
+        </div>
+    </div>
+    <div class="format-gallery">
+        <label class="control-label">工单状态</label>
+        <div>
+            <input  class="format-gallery" type="text" placeholder="工单状态" name="workType" id="workType">
+        </div>
+    </div>
+    <div class="format-gallery">
+        <label class="control-label">问题类型</label>
+        <div>
+            <input  class="format-gallery" type="text" placeholder="问题类型" name="problemType" id="problemType">
+        </div>
+    </div>
+    <div class="format-gallery">
+    <label class="control-label">问题补充</label>
+    <div>
+        <input  class="format-gallery" type="text" placeholder="问题补充" name="problem" id="problem">
+    </div>
+</div>
+    <div class="format-gallery">
+        <label class="control-label">处理描述</label>
+        <div>
+            <input  class="format-gallery" type="text" placeholder="处理描述" name="dispose" id="dispose">
+        </div>
+    </div>
+    <div class="format-gallery">
+        <label class="control-label">来源source</label>
+        <div>
+            <input  class="format-gallery" type="text" placeholder="来源source" name="sourceType" id="sourceType">
+        </div>
+    </div>
+    <div class="format-gallery">
+        <label class="control-label">创建人</label>
+        <div>
+            <input  class="format-gallery" type="text" placeholder="创建人" name="createBy" id="createBy">
+        </div>
+    </div>
+    <div class="format-gallery">
+        <label class="control-label">创建时间</label>
+        <div>
+            <input  class="format-gallery" type="text" placeholder="创建时间" name="createTime" id="createTime">
+        </div>
+    </div>
+    <div class="format-gallery">
+        <label class="control-label">更新人</label>
+        <div>
+            <input  class="format-gallery" type="text" placeholder="更新人" name="update_by" id="update_by">
+        </div>
+    </div>
+    <div class="format-gallery">
+        <label class="control-label">更新时间戳</label>
+        <div>
+            <input  class="format-gallery" type="text" placeholder="更新时间戳" name="update_at" id="update_at">
+        </div>
+    </div>
+</div>
+
+<div class='login_fields__submit'>
+    <input type='button' id="create" value='提交创建'>
+</div>
+</body>
+<script>
+
+    jQuery(document).ready(function () {
+
+        //绑定otp的click事件用于向后端发送获取手机验证码的请求
+        $("#create").on("click",function () {
+            var feedBack=$("#feedBack").val();
+            var disposeBy=$("#disposeBy").val();
+            var departmentby=$("#departmentby").val();
+            var studentName=$("#studentName").val();
+            var studentPhone=$("#studentPhone").val();
+            var teacherName=$("#teacherName").val();
+            var workType=$("#workType").val();
+            var problemType=$("#problemType").val();
+            var problem=$("#problem").val();
+            var dispose=$("#dispose").val();
+            var sourceType=$("#sourceType").val();
+            var createBy=$("#createBy").val();
+            var createTime=$("#createTime").val();
+            var update_by=$("#update_by").val();
+            var update_at=$("#update_at").val();
+
+            if (feedBack == null || feedBack ==""){
+                alert("反馈人不能为空");
+                return false;
+            }
+            if (disposeBy == null || disposeBy ==""){
+                alert("处理人不能为空");
+                return false;
+            }
+
+            $.ajax({
+                type:"POST",
+                contentType:"application/x-www-form-urlencoded",
+                url:"http://localhost:8090/problem/create",
+                data:{
+                    "feedBack":feedBack,
+                    "disposeBy":disposeBy,
+                    "departmentby":departmentby,
+                    "studentName":studentName,
+                    "studentPhone":studentPhone,
+                    "teacherName":teacherName,
+                    "workType":workType,
+                    "problemType":problemType,
+                    "problem":problem,
+                    "dispose":dispose,
+                    "sourceType":sourceType,
+                    "createBy":createBy,
+                    "createTime":createTime,
+                    "update_by":update_by,
+                    "update_at":update_at,
+
+                },
+                xhrFields:{withCredentials:"true"},
+                success:function (data) {
+                    if (data.status=="success"){
+                        alert("创建成功")
+
+                    } else {
+                        alert("创建失败，原因为"+data.data.errMsg);
+                    }
+                },
+                error:function (data) {
+                    alert("创建失败，原因为"+data.responseText);
+                }
+            });
+            return false;
+        });
+    })
+</script>
+</html>
