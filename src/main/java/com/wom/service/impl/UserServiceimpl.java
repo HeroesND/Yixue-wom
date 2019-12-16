@@ -46,15 +46,19 @@ public class UserServiceimpl implements UserService {
     @Override
     @Transactional
     public void  register(UserModel userModel) throws BusinessException{
-        ValidationResult result= validator.validator(userModel);
+        ValidationResult result= validator.validate(userModel);
         if (userModel == null){
             throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR, result.getErrMsg());
         }
-        if (StringUtils.isEmpty(userModel.getName())
-                /*||userModel.getGender()==null*/
+       /* if (StringUtils.isEmpty(userModel.getName())
+                *//*||userModel.getGender()==null*//*
                 ||userModel.getAge() == null
                 ||StringUtils.isEmpty(userModel.getTelphone())){
             throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR, result.getErrMsg());
+        }*/
+        ValidationResult result1=validator.validate(userModel);
+        if (result1.isHasErrors()){
+            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR,result1.getErrMsg());
         }
 
 
@@ -77,10 +81,9 @@ public class UserServiceimpl implements UserService {
     @Override
     public UserModel validateLogin(String telphone, String encrptPassword) throws BusinessException {
         //通过用户的手机获取用户的信息
-        ValidationResult result= validator.validator(userModel);
         UserDO userDO=userDOMapper.selectByTelphone(telphone);
         if (userDO==null){
-            throw new BusinessException(EmBusinessError.USER_LOGIN_FAIL, result.getErrMsg());
+            throw new BusinessException(EmBusinessError.USER_LOGIN_FAIL);
         }
 
         UserPasswordDO userPasswordDO=userPasswordDOMapper.selectByUserId(userDO.getId());
@@ -88,7 +91,7 @@ public class UserServiceimpl implements UserService {
 
         //比对用户信息内加密的密码是否和传输进来的密码相匹配
         if (!StringUtils.equals(encrptPassword,userModel.getEncrptPassword())){
-            throw new BusinessException(EmBusinessError.USER_LOGIN_FAIL, result.getErrMsg());
+            throw new BusinessException(EmBusinessError.USER_LOGIN_FAIL);
         }
         return userModel;
     }

@@ -3,6 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="css/default.css" rel="stylesheet" type="text/css" />
+    <!--必要样式-->
+    <link href="css/styles.css" rel="stylesheet" type="text/css" />
+    <link href="css/demo.css" rel="stylesheet" type="text/css" />
+    <link href="css/loaders.css" rel="stylesheet" type="text/css" />
+    <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+
+
 </head>
 <body class="login">
 <div class="content__page">
@@ -100,7 +108,7 @@
 </div>
 
 <div class='login_fields__submit'>
-    <input type='button' id="create" value='提交创建'>
+    <input type='button' id="create" value='创建'>
 </div>
 </body>
 <script>
@@ -125,19 +133,19 @@
             var update_by=$("#update_by").val();
             var update_at=$("#update_at").val();
 
-            if (feedBack == null || feedBack ==""){
-                alert("反馈人不能为空");
+            if (studentPhone == null || studentPhone ==""){
+                alert("学生联系方式不能为空");
                 return false;
             }
-            if (disposeBy == null || disposeBy ==""){
-                alert("处理人不能为空");
+            if (feedBack == null || feedBack ==""){
+                alert("反馈人不能为空");
                 return false;
             }
 
             $.ajax({
                 type:"POST",
                 contentType:"application/x-www-form-urlencoded",
-                url:"http://localhost:8090/problem/create",
+                url:"http://localhost:8080/problem/create",
                 data:{
                     "feedBack":feedBack,
                     "disposeBy":disposeBy,
@@ -159,14 +167,15 @@
                 xhrFields:{withCredentials:"true"},
                 success:function (data) {
                     if (data.status=="success"){
-                        alert("创建成功")
-
+                        alert("添加成功")
+                        window.location.href = "login.html";
                     } else {
-                        alert("创建失败，原因为"+data.data.errMsg);
+                        alert(1);
+                        alert("添加失败，原因为"+data.data.errMsg);
                     }
                 },
                 error:function (data) {
-                    alert("创建失败，原因为"+data.responseText);
+                    alert("添加失败，原因为"+data.responseText);
                 }
             });
             return false;

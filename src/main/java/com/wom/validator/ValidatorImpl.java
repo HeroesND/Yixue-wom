@@ -14,19 +14,20 @@ public class ValidatorImpl implements InitializingBean {
     private Validator validator;
 
     //实现校验方法并返回校验结果
-    public ValidationResult validator(Object bean){
-        ValidationResult validatorResult=new ValidationResult();
+    public ValidationResult validate(Object bean){
+        ValidationResult result=new ValidationResult();
         Set<ConstraintViolation<Object>> constraintViolationSet= validator.validate(bean);
         if (constraintViolationSet.size()>0){
             //有错误
-            validatorResult.setHasErrors(true);
-            constraintViolationSet.forEach(constraintViolation -> {
-                String errMsg=constraintViolation.getMessage();
-                String propertyName=constraintViolation.getPropertyPath().toString();
-                validatorResult.getErrMsgMap().put(propertyName,errMsg);
-            });
+            result.setHasErrors(true);
+            //遍历
+            for (ConstraintViolation<Object> constraintViolation : constraintViolationSet) {
+                String errMsg = constraintViolation.getMessage();
+                String propertyName = constraintViolation.getPropertyPath().toString();
+                result.getErrMsgMap().put(propertyName, errMsg);
+            }
         }
-        return validatorResult;
+        return result;
 
 
     }

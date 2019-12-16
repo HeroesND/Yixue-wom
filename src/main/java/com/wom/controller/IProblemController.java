@@ -8,9 +8,7 @@ import com.wom.service.model.ProblemModel;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller("/problem")
 @RequestMapping("/problem")
@@ -21,6 +19,8 @@ public class IProblemController extends BaseController {
     private IProblemService iProblemService;
 
     //创建工单的controller
+    @RequestMapping(value = "/create",method ={RequestMethod.POST},consumes = {CONTENT_TYPE_FORMED})
+    @ResponseBody
     public CommonReturnType createProblem(@RequestParam(name="feedBack")String feedBack,
                                           @RequestParam(name="disposeBy")String disposeBy,
                                           @RequestParam(name="departmentby")String departmentby,
@@ -28,10 +28,10 @@ public class IProblemController extends BaseController {
                                           @RequestParam(name="studentPhone")String studentPhone,
                                           @RequestParam(name="teacherName")String teacherName,
                                           @RequestParam(name="workType")String workType,
-                                          @RequestParam(name="problemType")String problemType,
+                                          @RequestParam(name="problemType")Integer problemType,
                                           @RequestParam(name="problem")String problem,
                                           @RequestParam(name="dispose")String dispose,
-                                          @RequestParam(name="sourceType")String sourceType,
+                                          @RequestParam(name="sourceType")Integer sourceType,
                                           @RequestParam(name="createBy")String createBy,
                                           @RequestParam(name="createTime")String createTime,
                                           @RequestParam(name="update_by")String update_by,
@@ -45,7 +45,7 @@ public class IProblemController extends BaseController {
         problemModel.setStudentPhone(studentPhone);
         problemModel.setTeacherName(teacherName);
         problemModel.setWorkType(workType);
-        problemModel.setProblemType(Integer.parseInt(problemType));
+        problemModel.setProblemType(problemType);
         problemModel.setProblem(problem);
         problemModel.setDispose(dispose);
         problemModel.setSourceType(sourceType);
@@ -53,6 +53,8 @@ public class IProblemController extends BaseController {
         problemModel.setCreateTime(createTime);
         problemModel.setUpdate_by(update_by);
         problemModel.setUpdate_at(update_at);
+
+        System.out.println(problemModel);
 
         ProblemModel problemModelForReturn = iProblemService.createProblem(problemModel);
         IProblemVO iProblemVO=convertVOFromModel(problemModelForReturn);

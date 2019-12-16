@@ -1,6 +1,8 @@
 package com.wom.validator;
 
-import com.alibaba.druid.util.StringUtils;
+
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,12 +28,12 @@ public class ValidationResult {
     }
 
     public void setErrMsgMap(Map<String, String> errMsgMap) {
+
         this.errMsgMap = errMsgMap;
     }
 
     //实现通用的通过格式化字符串信息获取错误结果的msg方法
-    public boolean getErrMsg(){
-
-        return StringUtils.equals(String.valueOf(errMsgMap.values().toArray()),",");
+    public String getErrMsg(){
+       return StringUtils.join(errMsgMap.values().toArray(),",");
     }
 }

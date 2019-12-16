@@ -40,13 +40,11 @@
 	      </div>
 	    </div>
 	    <div class='login_fields__password'>
-	      <div class='icon'>
+	      <!--<div class='icon'>
 	        <img alt="" src='img/key.png'>
-	      </div>
-	      <input name="code" placeholder='验证码' maxlength="4" type='text' name="ValidateNum" autocomplete="off">
-	      <div class='validation' style="opacity: 1; right: -5px;top: -3px;">
-          <canvas class="J_codeimg" id="myCanvas" onclick="Code();">对不起，您的浏览器不支持canvas，请下载最新版浏览器!</canvas>
-	      </div>
+	      </div>-->
+	     <!-- <input name="code" placeholder='验证码' maxlength="4" type='text' name="ValidateNum" autocomplete="off">-->
+
 	    </div>
 	    <div class='login_fields__submit'>
 	      <input type='button' id="login" value='登录'>
@@ -147,8 +145,8 @@
 			});
 	        //非空验证
 	        $('input[type="button"]').click(function () {
-	            var login = $('input[name="login"]').val();
-	            var pwd = $('input[name="pwd"]').val();
+	            var telphone = $('input[name="telphone"]').val();
+	            var password = $('input[name="password"]').val();
 	            var code = $('input[name="code"]').val();
 	            if (login == '') {
 	                ErroAlert('请输入您的账号');
@@ -253,11 +251,6 @@
 
 	jQuery(document).ready(function () {
 
-		$("#register").on("click",function () {
-			window.location.href="getotp.html";
-
-		});
-
 		//绑定otp的click事件用于向后端发送获取手机验证码的请求
 		$("#login").on("click",function () {
 			var telphone=$("#telphone").val();
@@ -275,7 +268,7 @@
 			$.ajax({
 				type:"POST",
 				contentType:"application/x-www-form-urlencoded",
-				url:"http://localhost:8090/api/user/login",
+				url:"http://localhost:8080/login",
 				data:{
 					"telphone":$("#telphone").val(),
 					"password":password,
@@ -284,7 +277,7 @@
 				xhrFields:{withCredentials:"true"},
 				success:function (data) {
 					if (data.status=="success"){
-						//alert("登陆成功")
+						alert("登陆成功")
 						window.location.href = "login.html";
 					} else {
 						alert("登陆失败，原因为"+data.data.errMsg);

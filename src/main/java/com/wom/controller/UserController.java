@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Random;
 
 @Controller("user")
-@RequestMapping("/problem")
+@RequestMapping("/")
 @CrossOrigin(origins = {"*"},allowCredentials = "true")//跨域请求
 public class UserController extends BaseController {
 
@@ -29,19 +29,18 @@ public class UserController extends BaseController {
     private  HttpServletRequest httpServletRequest;
 
     //用户登陆接口
-    @RequestMapping(value = "/user/login",method ={RequestMethod.POST},consumes = {CONTENT_TYPE_FORMED})
+    @RequestMapping(value = "/login",method ={RequestMethod.POST},consumes = {CONTENT_TYPE_FORMED})
     @ResponseBody
 
     public CommonReturnType login(@RequestParam(name="telphone")String telphone,
-                                  @RequestParam(name="password")Integer password) throws BusinessException {
+                                  @RequestParam(name="password")String password) throws BusinessException {
         //校验入参
-        ValidationResult result= new ValidationResult();
-        if (result.isHasErrors()){
-            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR,result.getErrMsg());
+        if (org.apache.commons.lang3.StringUtils.isEmpty(telphone)||StringUtils.isEmpty(password)){
+            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
         }
 
         //用户登陆服务,用来校验用户登陆是否合法
-        UserModel userModel=userService.validateLogin(telphone, String.valueOf(password));
+        UserModel userModel=userService.validateLogin(String.valueOf(telphone),String.valueOf(password));
 
         //加登陆凭证入到用户登陆成功的session内
         this.httpServletRequest.getSession().setAttribute("IS_LOGIN",true);
