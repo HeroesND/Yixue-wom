@@ -60,11 +60,17 @@
             <artifactId>hibernate-validator</artifactId>
             <version>6.0.11.Final</version>
         </dependency>
-        <!--监控sql日志-->
+        <!--日志包-->
         <dependency>
-            <groupId>org.bgee.log4jdbc-log4j2</groupId>
-            <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
-            <version>${log4jdbc.version}</version>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j-version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

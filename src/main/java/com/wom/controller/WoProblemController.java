@@ -14,15 +14,14 @@ import org.springframework.web.bind.annotation.*;
 @Controller("wolist")
 @RequestMapping("/api")
 @CrossOrigin(origins = {"*"},allowCredentials = "true")//跨域请求
-public class WoProblemController/* extends BaseController */{
+public class WoProblemController extends BaseController {
 
     @Autowired
-    private WoProblemServiceimpl woProblemService;
+    private WoProblemService woProblemService;
 
-    @RequestMapping(value = "/upWoproblem",method ={RequestMethod.POST}/*,consumes = {CONTENT_TYPE_FORMED}*/)
+    @RequestMapping(value = "/upWoproblem",method ={RequestMethod.POST},consumes = {CONTENT_TYPE_FORMED})
     @ResponseBody
-    public WoProblemModel upWoproblem (UpdateWoListDto updateWoListDto)/* throws BusinessException */{
-        System.out.println(updateWoListDto);
+    public WoProblemModel upWoproblem (UpdateWoListDto updateWoListDto) throws BusinessException {
             int i=woProblemService.upWoproblem(updateWoListDto);
             if (i==1) {
                 WoProblemModel woProblemModel=woProblemService.selbyid(updateWoListDto.getId());
@@ -31,9 +30,9 @@ public class WoProblemController/* extends BaseController */{
                 return null;
             }
     }
-    @RequestMapping(value = "/selbyid",method ={RequestMethod.GET}/*,consumes = {CONTENT_TYPE_FORMED}*/)
+    @RequestMapping(value = "/selbyid",method ={RequestMethod.GET},consumes = {CONTENT_TYPE_FORMED})
     @ResponseBody
-    public WoProblemModel selbyid (@RequestParam(name="id")Integer id)/* throws BusinessException */{
+    public WoProblemModel selbyid (@RequestParam(name="id")Integer id) throws BusinessException {
             WoProblemModel woProblemModel=woProblemService.selbyid(id);
             return woProblemModel;
     }
