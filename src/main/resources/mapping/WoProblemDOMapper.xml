@@ -3,8 +3,7 @@
 
 <mapper namespace="com.wom.dao.WoProblemDOMapper">
 
-  <resultMap id="BaseResultMap" type="com.wom.model.dao.request.UpdateWoListDto">
-
+  <resultMap id="BaseResultMap" type="com.wom.model.dao.request.WoListRequestDto">
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="workType" property="workType" jdbcType="INTEGER" />
     <result column="problem" property="problem" jdbcType="VARCHAR" />
@@ -15,7 +14,7 @@
   <sql id="Base_Column_List">
     id, feedBack, disposeBy, departmentby, studentName, studentPhone, teacherName,workType,problemType,problem,dispose,sourceType,createBy,createTime,update_by,update_at
   </sql>
-  <update id="upWoproblem" parameterType="com.wom.model.dao.request.UpdateWoListDto">
+  <update id="upWoproblem" parameterType="com.wom.model.dao.request.WoListRequestDto">
     update wo_problem
     <set>
       <if test="workType != null">
@@ -41,6 +40,69 @@
   from wo_problem
   where id = #{id,jdbcType=INTEGER}
 </select>
+
+<select id="selByPage" parameterType="com.wom.model.dao.response.WoListResponseDto" resultType="com.wom.service.model.WoProblemModel">
+    select <include refid="Base_Column_List" />
+     from wo_problem
+    <where>
+      <if test="woName!='' and woName!=null">
+        and (studentName like "%"#{woName}"%"  or teacherName like "%"#{woName}"%")
+      </if>
+      <if test="feedBack!='' and feedBack!=null">
+        and feedBack like "%"#{feedBack}"%"
+      </if>
+      <if test="workType!='' and workType!=null">
+        and workType=#{workType}
+      </if>
+      <if test="problemType!='' and problemType!=null">
+        and problemType=#{problemType}
+      </if>
+      <if test="courseType!='' and courseType!=null">
+        and courseType=#{courseType}
+      </if>
+      <if test="disposeBy!='' and disposeBy!=null">
+        and disposeBy=#{disposeBy}
+      </if>
+      <if test="beginCreateTime!='' and beginCreateTime!=null">
+        and createTime &gt;=#{beginCreateTime}
+      </if>
+      <if test="endCreateTime!='' and endCreateTime!=null">
+        and createTime &lt;=#{endCreateTime}
+      </if>
+    </where>
+    limit #{pageVo.offSet},#{pageVo.pageSize}
+</select>
+<!--多条件分页查询总条数-->
+  <select id="selAllNum" parameterType="com.wom.model.dao.response.WoListResponseDto" resultType="java.lang.Integer">
+    select count(*)
+    from wo_problem
+    <where>
+      <if test="woName!='' and woName!=null">
+        and (studentName like "%"#{woName}"%"  or teacherName like "%"#{woName}"%")
+      </if>
+      <if test="feedBack!='' and feedBack!=null">
+        and feedBack like "%"#{feedBack}"%"
+      </if>
+      <if test="workType!='' and workType!=null">
+        and workType=#{workType}
+      </if>
+      <if test="problemType!='' and problemType!=null">
+        and problemType=#{problemType}
+      </if>
+      <if test="courseType!='' and courseType!=null">
+        and courseType=#{courseType}
+      </if>
+      <if test="disposeBy!='' and disposeBy!=null">
+        and disposeBy=#{disposeBy}
+      </if>
+      <if test="beginCreateTime!='' and beginCreateTime!=null">
+        and createTime &gt;=#{beginCreateTime}
+      </if>
+      <if test="endCreateTime!='' and endCreateTime!=null">
+        and createTime &lt;=#{endCreateTime}
+      </if>
+    </where>
+  </select>
   <!--<sql id="Base_Column_List">
     id, name, gender, age, telphone, register_mode, third_party_id
   </sql>

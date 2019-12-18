@@ -1,11 +1,12 @@
 package com.wom.model.dao.request;
 
+import com.wom.service.model.PageVo;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class UpdateWoListDto {
+public class WoListRequestDto {
     private Integer id;
     //工单状态
     private Integer workType;
