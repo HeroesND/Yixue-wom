@@ -2,10 +2,10 @@ package com.wom.controller;
 
 import com.wom.error.BusinessException;
 import com.wom.model.dao.request.WoListRequestDto;
-import com.wom.model.dao.response.WoListResponseDto;
+import com.wom.model.dao.request.WoListDto;
 import com.wom.service.WoProblemService;
 import com.wom.service.model.PageVo;
-import com.wom.service.model.WoProblemModel;
+import com.wom.model.dao.response.WoProblemModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,44 +19,44 @@ import java.util.Map;
 @Controller("wolist")
 @RequestMapping("/wo/issue/problem")
 @CrossOrigin(origins = {"*"},allowCredentials = "true")//跨域请求
-public class WoProblemController/* extends BaseController */{
+public class WoProblemController {
 
     @Autowired
     private WoProblemService woProblemService;
-    @RequestMapping(value = "/updateById",method ={RequestMethod.POST}/*,consumes = {CONTENT_TYPE_FORMED}*/)
+    @RequestMapping(value = "/updateById",method ={RequestMethod.POST})
     @ResponseBody
-    public WoProblemModel upWoproblem (WoListRequestDto woListRequestDto) throws BusinessException {
-            int i=woProblemService.upWoproblem(woListRequestDto);
+    public int upWoProblemModel (WoListRequestDto woListRequestDto){
+            System.out.println(woListRequestDto);
+            int i=woProblemService.upWoProblemModel(woListRequestDto);
             if (i==1) {
-                WoProblemModel woProblemModel=woProblemService.selbyid(woListRequestDto.getId());
-                return woProblemModel;
+                return 200;
             }else {
-                return null;
+                return 10002;
             }
     }
-    @RequestMapping(value = "/findById",method ={RequestMethod.GET}/*,consumes = {CONTENT_TYPE_FORMED}*/)
+    @RequestMapping(value = "/findById",method ={RequestMethod.GET})
     @ResponseBody
-    public WoProblemModel selbyid (@RequestParam(name="id")Integer id) throws BusinessException {
-            WoProblemModel woProblemModel=woProblemService.selbyid(id);
+    public WoProblemModel selWoProblemModelbyid (@RequestParam(name="id")Integer id){
+            WoProblemModel woProblemModel=woProblemService.selWoProblemModelbyid(id);
             return woProblemModel;
     }
 
-    @RequestMapping(value = "/findAll",method ={RequestMethod.GET}/*,consumes = {CONTENT_TYPE_FORMED}*/)
+    @RequestMapping(value = "/findAll",method ={RequestMethod.GET})
     @ResponseBody
-    public Object selByPage (HttpServletRequest request,WoListResponseDto woListResponseDto)/* throws BusinessException */{
+    public Object selWoListDtoByPage (HttpServletRequest request, WoListDto woListDto){
         PageVo pageVo =new PageVo();
         String page=request.getParameter("page");
         String pageSize=request.getParameter("limit");
         pageVo.setPage(Integer.parseInt(page));
         pageVo.setPageSize(Integer.parseInt(pageSize));
-        woListResponseDto.setPageVo(pageVo);
-        List<WoProblemModel> list=woProblemService.selByPage(woListResponseDto);
+        woListDto.setPageVo(pageVo);
+        List<WoProblemModel> list=woProblemService.selWoListDtoByPage(woListDto);
         Map<String,Object> map=new HashMap<String, Object>();
-        System.out.println(woListResponseDto);
+        System.out.println(woListDto);
         System.out.println(list);
         map.put("code", 0);
         map.put("data", list);
-        map.put("count", woProblemService.selAllNum(woListResponseDto));
+        map.put("count", woProblemService.selWoListDtoAllNum(woListDto));
         return map;
     }
 

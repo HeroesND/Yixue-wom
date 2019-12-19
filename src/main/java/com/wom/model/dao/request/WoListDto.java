@@ -1,11 +1,10 @@
-package com.wom.model.dao.response;
+package com.wom.model.dao.request;
 
 import com.wom.service.model.PageVo;
 import lombok.Data;
 
-import java.util.Date;
 @Data
-public class WoListResponseDto {
+public class WoListDto {
     //学生姓名或者老师姓名模糊查询
     private String woName;
     //反馈人姓名模糊查询

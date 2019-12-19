@@ -14,6 +14,6 @@ public class WoListRequestDto {
     private String  problem;
     //处理描述
     private String dispose;
-    //图片附件
+    //更新时间
     private String update_by;
 }

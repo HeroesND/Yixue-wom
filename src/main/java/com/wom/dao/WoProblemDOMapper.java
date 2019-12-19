@@ -1,8 +1,8 @@
 package com.wom.dao;
 
 import com.wom.model.dao.request.WoListRequestDto;
-import com.wom.model.dao.response.WoListResponseDto;
-import com.wom.service.model.WoProblemModel;
+import com.wom.model.dao.request.WoListDto;
+import com.wom.model.dao.response.WoProblemModel;
 
 import java.util.List;
 
@@ -12,26 +12,26 @@ public interface WoProblemDOMapper {
      * @param woListRequestDto
      * @return
      */
-    int  upWoproblem(WoListRequestDto woListRequestDto);
+    int  upWoProblemModel(WoListRequestDto woListRequestDto);
 
     /**
      * 根据id查看工单详情
      * @param id
      * @return
      */
-    WoProblemModel selbyid(Integer id);
+    WoProblemModel selWoProblemModelbyid(Integer id);
 
     /**
      * 多条件分页查询
-     * @param woListResponseDto
+     * @param woListDto
      * @return
      */
-    List<WoProblemModel> selByPage(WoListResponseDto woListResponseDto);
+    List<WoProblemModel> selWoListDtoByPage(WoListDto woListDto);
 
     /**
      * 多条件分页查询总条数
-     * @param woListResponseDto
+     * @param woListDto
      * @return
      */
-    int selAllNum(WoListResponseDto woListResponseDto);
+    int selWoListDtoAllNum(WoListDto woListDto);
 }

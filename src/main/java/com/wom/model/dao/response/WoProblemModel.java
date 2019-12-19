@@ -1,4 +1,4 @@
-package com.wom.service.model;
+package com.wom.model.dao.response;
 import lombok.Data;
 
 import	java.util.Date;

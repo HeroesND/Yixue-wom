@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wom.dao.TestPackageDOMapper">
+    <sql id="Base_Column_List">
+    id, studentName, studentPhone, modelNumber, crname, configurationBy, packageType,isCommunication,lectureSupplement,createBy,createTime,update_at,isdelete
+  </sql>
+    <insert id="addTestPackageModel" parameterType="com.wom.model.dao.request.TestPackageDto">
+    insert into testpackage (studentName,studentPhone,modelNumber,crname,
+    configurationBy,packageType,isCommunication,
+     lectureSupplement,createBy,createTime,isdelete)
+    values (#{studentName,jdbcType=VARCHAR},#{studentPhone,jdbcType=VARCHAR},#{modelNumber,jdbcType=VARCHAR}
+    ,#{crname,jdbcType=VARCHAR},#{configurationBy,jdbcType=VARCHAR},#{packageType,jdbcType=VARCHAR}
+    ,#{isCommunication,jdbcType=INTEGER},#{lectureSupplement,jdbcType=VARCHAR},#{createBy,jdbcType=VARCHAR},NOW(),0)
+  </insert>
+
+    <select id="selTestPackageModelByid" parameterType="java.lang.Integer"
+            resultType="com.wom.model.dao.response.TestPackageModel">
+        select
+        <include refid="Base_Column_List"/>
+        from testpackage
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <update id="delTestPackageModelByid">
+        update testpackage
+        set isdelete=0
+        where id = #{id}
+    </update>
+
+    <select id="selTestPackageModelByPage" parameterType="com.wom.model.dao.request.TestPackageDto"
+            resultType="com.wom.model.dao.response.TestPackageModel">
+        select
+        <include refid="Base_Column_List"/>
+        from testpackage
+        <where>
+            <if test="testPackage!='' and testPackage!=null">
+                and (studentName like "%"#{testPackage,jdbcType=VARCHAR}"%" or
+                studentPhone=#{testPackage,jdbcType=VARCHAR})
+            </if>
+            <if test="packageType!='' and packageType!=null">
+                and packageType=#{packageType,jdbcType=VARCHAR}
+            </if>
+            <if test="isdelete!='' and isdelete!=null">
+                and isdelete=#{isdelete,jdbcType=INTEGER}
+            </if>
+        </where>
+        limit #{pageVo.offSet,jdbcType=INTEGER},#{pageVo.pageSize,jdbcType=INTEGER}
+    </select>
+    <!--多条件分页查询总条数-->
+    <select id="selTestPackageModelAllNum" parameterType="com.wom.model.dao.request.TestPackageDto"
+            resultType="java.lang.Integer">
+        select count(*)
+        from testpackage
+        <where>
+            <if test="testPackage!='' and testPackage!=null">
+                and (studentName like "%"#{testPackage,jdbcType=VARCHAR}"%" or
+                studentPhone=#{testPackage,jdbcType=VARCHAR})
+            </if>
+            <if test="packageType!='' and packageType!=null">
+                and packageType=#{packageType,jdbcType=VARCHAR}
+            </if>
+            <if test="isdelete!='' and isdelete!=null">
+                and isdelete=#{isdelete,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+</mapper>
