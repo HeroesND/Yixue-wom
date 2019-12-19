@@ -36,11 +36,11 @@ public class IProblemServiceImpl implements IProblemService {
     @Transactional
     public ProblemModel createProblem(ProblemModel problemModel) throws BusinessException {
         //校验入参
-        System.out.println(problemModel);
+        /*System.out.println(problemModel);
         ValidationResult result= validator.validate(problemModel);
         if (result.isHasErrors()){
             throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR,result.getErrMsg());
-        }
+        }*/
 
         //转化ProblemModel->dataobject
         ProblemDO problemDO=this.convertProblemDOFromProblemModel(problemModel);
