@@ -19,9 +19,9 @@ public class WoListResponseDto {
     //处理人 选择技术支持
     private String disposeBy;
     //创建时间
-    private Date beginCreateTime;
+    private String beginCreateTime;
     //创建时间
-    private Date endCreateTime;
+    private String endCreateTime;
     //分页
     private PageVo pageVo;
 }

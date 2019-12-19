@@ -9,7 +9,6 @@
     <result column="problem" property="problem" jdbcType="VARCHAR" />
     <result column="dispose" property="dispose" jdbcType="VARCHAR" />
     <result column="update_by" property="update_by" jdbcType="VARCHAR" />
-    <result column="update_at" property="update_at" jdbcType="DATE" />
   </resultMap>
   <sql id="Base_Column_List">
     id, feedBack, disposeBy, departmentby, studentName, studentPhone, teacherName,workType,problemType,problem,dispose,sourceType,createBy,createTime,update_by,update_at

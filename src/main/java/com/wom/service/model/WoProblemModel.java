@@ -17,7 +17,7 @@ public class WoProblemModel {
     private String dispose;
     private Integer sourceType;
     private String createBy;
-    private  Date createTime;
+    private String createTime;
     private String update_by;
-    private Date update_at;
+    private String update_at;
 }
