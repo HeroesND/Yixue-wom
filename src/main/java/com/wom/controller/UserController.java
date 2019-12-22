@@ -42,8 +42,6 @@ public class UserController extends BaseController {
         }
 
         //用户登陆服务,用来校验用户登陆是否合法
-        System.out.println("手机号原始："+telphone);
-        System.out.println("手机号转码侯："+String.valueOf(telphone));
         UserModel userModel=userService.validateLogin(String.valueOf(telphone),this.EncodeByMd5(password));
 
         //加登陆凭证入到用户登陆成功的session内

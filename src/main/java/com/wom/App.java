@@ -35,7 +35,7 @@ public class App {
 
     public static void main( String[] args ) throws BusinessException, UnsupportedEncodingException, NoSuchAlgorithmException {
 
-        System.out.println( "Hello World!" );
+        System.out.println( "Hello World" );
         SpringApplication.run(App.class,args);//启动springboot的项目
 //        UserController.login("13761862414","123456");
     }
